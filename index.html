@@ -500,10 +500,29 @@
   @media (max-width: 768px) {
     .slide { overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
 
-    /* NAV */
-    .nav { bottom: 16px; padding: 10px 18px; gap: 10px; }
-    .nav .dots { display: none; }
+    /* NAV — sube al top en mobile, no interfiere con contenido scrollable */
+    .nav {
+      top: 12px !important;
+      bottom: auto !important;
+      padding: 7px 18px !important;
+      gap: 10px !important;
+    }
+    .nav button { display: none !important; }
+    .nav .dots { display: flex !important; }
+    .nav .dot { width: 7px !important; height: 7px !important; }
+    .nav .dot.active { width: 20px !important; }
+    .nav .counter { font-size: 11px !important; min-width: 30px !important; }
     .hint { display: none; }
+
+    /* Espacio para el nav en el tope de cada slide */
+    #s1 .content { padding-top: 64px !important; }
+    #s2 .left    { padding-top: 64px !important; }
+    #s3 .content { padding-top: 64px !important; }
+    #s4 .content { padding-top: 64px !important; }
+    #s5 .content { padding-top: 64px !important; }
+    #s6 .content { padding-top: 64px !important; }
+    #s7 .content { padding-top: 64px !important; }
+    #s8 .left    { padding-top: 64px !important; }
 
     /* SLIDE 1 */
     #s1 .content {
