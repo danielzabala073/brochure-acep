@@ -217,28 +217,26 @@
      SLIDE 4 — SERVICIOS
   ══════════════════════════════════════════ */
   #s4 { background: var(--light); }
-
-  #s4 { background: var(--light); }
   #s4 .content {
     display: flex; flex-direction: column; height: 100%;
-    padding: 28px 56px 80px; /* padding-bottom cubre el nav */
+    padding: 20px 48px 72px;
   }
-  #s4 .header { margin-bottom: 16px; flex-shrink: 0; }
+  #s4 .header { margin-bottom: 12px; flex-shrink: 0; }
   #s4 .section-label {
     font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
-    color: var(--teal); margin-bottom: 5px; font-weight: 600;
+    color: var(--teal); margin-bottom: 4px; font-weight: 600;
   }
   #s4 h2 { font-size: clamp(20px, 2.4vw, 30px); font-weight: 800; color: var(--navy); }
   #s4 h2 span { color: var(--teal); }
 
   #s4 .services-grid {
-    display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px;
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
     flex: 1; min-height: 0;
   }
 
   .service-card {
-    background: #fff; border-radius: 18px; padding: 0;
-    box-shadow: 0 2px 20px rgba(13,34,64,.08);
+    background: #fff; border-radius: 16px; padding: 0;
+    box-shadow: 0 2px 16px rgba(13,34,64,.08);
     display: flex; flex-direction: column;
     border-bottom: 4px solid transparent;
     transition: all .25s ease;
@@ -250,31 +248,34 @@
   .service-card:nth-child(4) { border-bottom-color: #0EA5E9; }
   .service-card:nth-child(5) { border-bottom-color: #10B981; }
 
-  .service-card:hover { transform: translateY(-4px); box-shadow: 0 14px 36px rgba(13,34,64,.15); }
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(13,34,64,.15); }
 
-  /* Área de gradiente: altura fija en px, icono centrado */
+  /* Imagen real con overlay oscuro — altura fija */
   .service-card .s-img {
-    height: 160px; flex-shrink: 0;
+    height: 155px; flex-shrink: 0;
+    background-size: cover; background-position: center;
+    background-color: #1A3A5C; /* fallback mientras carga */
     position: relative;
-    display: flex; align-items: center; justify-content: center;
+    display: flex; align-items: flex-end; padding: 10px 12px;
   }
-  .service-card .s-img::after { display: none; }
-
+  .service-card .s-img::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(10,26,50,.1) 0%, rgba(10,26,50,.65) 100%);
+  }
   .service-card .s-icon {
-    width: 56px; height: 56px; border-radius: 14px;
+    width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
-    font-size: 26px; position: relative; z-index: 1;
-    background: rgba(255,255,255,.22); backdrop-filter: blur(8px);
-    border: 1.5px solid rgba(255,255,255,.45);
+    font-size: 18px; position: relative; z-index: 1;
+    background: rgba(255,255,255,.2); backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,.35);
   }
 
-  /* Cuerpo con flex:1 para ocupar el espacio restante */
   .service-card .s-body {
-    flex: 1; padding: 14px 16px 16px; background: #fff;
+    flex: 1; padding: 12px 14px 14px; background: #fff;
     display: flex; flex-direction: column;
   }
-  .service-card h3 { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 9px; line-height: 1.3; }
-  .service-card ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .service-card h3 { font-size: 12.5px; font-weight: 700; color: var(--navy); margin-bottom: 8px; line-height: 1.3; }
+  .service-card ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
   .service-card ul li {
     font-size: 11px; color: var(--gray); line-height: 1.4;
     padding-left: 12px; position: relative;
@@ -574,14 +575,13 @@
     #s3 .quote { margin-top: 24px; font-size: 13px; }
 
     /* SLIDE 4 */
-    #s4 .content { padding: 48px 20px 80px; height: auto; }
+    #s4 .content { padding: 48px 16px 80px; height: auto; }
     #s4 .services-grid {
       grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: auto;
       flex: none; gap: 12px;
     }
-    .service-card { min-height: 220px; }
-    .service-card .s-img { min-height: 120px; }
+    .service-card { min-height: 200px; }
+    .service-card .s-img { height: 120px !important; }
 
     /* SLIDE 5 */
     #s5 .content { padding: 48px 24px 80px; }
@@ -746,7 +746,7 @@
       </div>
       <div class="services-grid">
         <div class="service-card">
-          <div class="s-img" style="background:linear-gradient(135deg,#2E8B84 0%,#1A5276 100%)">
+          <div class="s-img" data-bg="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=480&q=72&auto=format&fit=crop">
             <div class="s-icon">📊</div>
           </div>
           <div class="s-body">
@@ -760,7 +760,7 @@
           </div>
         </div>
         <div class="service-card">
-          <div class="s-img" style="background:linear-gradient(135deg,#1B6FBF 0%,#0D2240 100%)">
+          <div class="s-img" data-bg="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=480&q=72&auto=format&fit=crop">
             <div class="s-icon">🧾</div>
           </div>
           <div class="s-body">
@@ -774,7 +774,7 @@
           </div>
         </div>
         <div class="service-card">
-          <div class="s-img" style="background:linear-gradient(135deg,#6A5ACD 0%,#1B6FBF 100%)">
+          <div class="s-img" data-bg="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=480&q=72&auto=format&fit=crop">
             <div class="s-icon">👥</div>
           </div>
           <div class="s-body">
@@ -788,7 +788,7 @@
           </div>
         </div>
         <div class="service-card">
-          <div class="s-img" style="background:linear-gradient(135deg,#0EA5E9 0%,#2E8B84 100%)">
+          <div class="s-img" data-bg="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=480&q=72&auto=format&fit=crop">
             <div class="s-icon">🔎</div>
           </div>
           <div class="s-body">
@@ -802,7 +802,7 @@
           </div>
         </div>
         <div class="service-card">
-          <div class="s-img" style="background:linear-gradient(135deg,#10B981 0%,#1A5276 100%)">
+          <div class="s-img" data-bg="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=480&q=72&auto=format&fit=crop">
             <div class="s-icon">⚖️</div>
           </div>
           <div class="s-body">
@@ -1060,7 +1060,20 @@
     // Reset scroll position of the new active slide to top
     slides[current].scrollTop = 0;
 
+    // Lazy-load slide 4 images the first time it becomes visible
+    if (current === 3) loadS4Images();
+
     showNavBriefly();
+  }
+
+  // ── Lazy load slide 4 images ──
+  let s4Loaded = false;
+  function loadS4Images() {
+    if (s4Loaded) return;
+    document.querySelectorAll('#s4 [data-bg]').forEach(el => {
+      el.style.backgroundImage = 'url(' + el.dataset.bg + ')';
+    });
+    s4Loaded = true;
   }
 
   document.getElementById('btnNext').addEventListener('click', () => goTo(current + 1));
