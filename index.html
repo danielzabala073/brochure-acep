@@ -500,29 +500,23 @@
   @media (max-width: 768px) {
     .slide { overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
 
-    /* NAV — sube al top en mobile, no interfiere con contenido scrollable */
+    /* NAV — auto-oculto en mobile (aparece al navegar, desaparece solo) */
     .nav {
-      top: 12px !important;
-      bottom: auto !important;
-      padding: 7px 18px !important;
-      gap: 10px !important;
+      bottom: 24px;
+      padding: 9px 20px;
+      gap: 10px;
+      transition: opacity 0.4s ease, transform 0.4s ease;
     }
-    .nav button { display: none !important; }
-    .nav .dots { display: flex !important; }
-    .nav .dot { width: 7px !important; height: 7px !important; }
-    .nav .dot.active { width: 20px !important; }
-    .nav .counter { font-size: 11px !important; min-width: 30px !important; }
+    .nav.nav-hidden {
+      opacity: 0 !important;
+      transform: translateX(-50%) translateY(14px) !important;
+      pointer-events: none !important;
+    }
+    .nav .dots { display: flex; }
+    .nav .dot { width: 7px; height: 7px; }
+    .nav .dot.active { width: 20px; }
+    .nav .counter { font-size: 11px; min-width: 28px; }
     .hint { display: none; }
-
-    /* Espacio para el nav en el tope de cada slide */
-    #s1 .content { padding-top: 64px !important; }
-    #s2 .left    { padding-top: 64px !important; }
-    #s3 .content { padding-top: 64px !important; }
-    #s4 .content { padding-top: 64px !important; }
-    #s5 .content { padding-top: 64px !important; }
-    #s6 .content { padding-top: 64px !important; }
-    #s7 .content { padding-top: 64px !important; }
-    #s8 .left    { padding-top: 64px !important; }
 
     /* SLIDE 1 */
     #s1 .content {
@@ -1038,10 +1032,11 @@
   const slides = Array.from(document.querySelectorAll('.slide'));
   const dotsEl  = document.getElementById('dots');
   const counter = document.getElementById('counter');
+  const navEl   = document.querySelector('.nav');
   const total   = slides.length;
   let   current = 0;
 
-  // Build dots
+  // ── Build dots ──
   slides.forEach((_, i) => {
     const d = document.createElement('div');
     d.className = 'dot' + (i === 0 ? ' active' : '');
@@ -1049,22 +1044,21 @@
     dotsEl.appendChild(d);
   });
 
+  // ── Navigation ──
   function goTo(idx) {
     slides[current].classList.remove('active');
-    slides[current].classList.add('prev');
-    setTimeout(() => slides[current > idx ? current : current].classList.remove('prev'), 650);
-
-    // Remove prev from old
     slides.forEach(s => s.classList.remove('prev'));
-    if (idx < current) {
-      slides[current].classList.add('prev');
-    }
+    if (idx < current) slides[current].classList.add('prev');
 
     current = (idx + total) % total;
     slides[current].classList.add('active');
-
     dotsEl.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
     counter.textContent = (current + 1) + ' / ' + total;
+
+    // Reset scroll position of the new active slide to top
+    slides[current].scrollTop = 0;
+
+    showNavBriefly();
   }
 
   document.getElementById('btnNext').addEventListener('click', () => goTo(current + 1));
@@ -1075,13 +1069,37 @@
     if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(current - 1); }
   });
 
-  // Touch / swipe
-  let startX = 0;
-  document.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-  document.addEventListener('touchend',   e => {
+  // ── Swipe ──
+  let startX = 0, startY = 0;
+  document.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    showNavBriefly();
+  }, { passive: true });
+  document.addEventListener('touchend', e => {
     const dx = e.changedTouches[0].clientX - startX;
-    if (Math.abs(dx) > 50) dx < 0 ? goTo(current + 1) : goTo(current - 1);
+    const dy = Math.abs(e.changedTouches[0].clientY - startY);
+    // Only trigger slide navigation on horizontal swipe (not vertical scroll)
+    if (Math.abs(dx) > 50 && dy < 40) {
+      dx < 0 ? goTo(current + 1) : goTo(current - 1);
+    }
   });
+
+  // ── Auto-hide nav on mobile ──
+  let navTimer = null;
+  function isMobile() { return window.innerWidth <= 768; }
+
+  function showNavBriefly() {
+    if (!isMobile()) return;
+    navEl.classList.remove('nav-hidden');
+    clearTimeout(navTimer);
+    navTimer = setTimeout(() => navEl.classList.add('nav-hidden'), 3000);
+  }
+
+  // Initial state
+  if (isMobile()) {
+    showNavBriefly();
+  }
 </script>
 
 </body>
