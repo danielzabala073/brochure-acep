@@ -506,10 +506,15 @@
     .hint { display: none; }
 
     /* SLIDE 1 */
-    #s1 .content { padding: 40px 24px; justify-content: flex-start; padding-top: 60px; }
+    #s1 .content {
+      height: auto; min-height: 100%;
+      padding: 60px 24px 90px;
+      justify-content: flex-start;
+    }
     #s1 .logo-wrap img { width: 220px; }
-    #s1 h1 { font-size: clamp(24px, 7vw, 36px); }
-    #s1 .tagline { font-size: 12px; }
+    #s1 h1 { font-size: clamp(22px, 7vw, 34px); }
+    #s1 .tagline { font-size: 12px; margin-bottom: 16px; }
+    #s1 .divider { margin: 0 auto 16px; }
     #s1 .pills { gap: 8px; }
     #s1 .pill { font-size: 11px; padding: 6px 14px; }
 
@@ -560,9 +565,16 @@
 
     /* SLIDE 8 */
     #s8 .layout { grid-template-columns: 1fr; height: auto; min-height: 100%; }
-    #s8 .left { padding: 48px 28px 32px; }
+    #s8 .left {
+      padding: 56px 28px 36px;
+      justify-content: flex-start;
+      min-height: auto;
+    }
     #s8 .left h2 { font-size: 26px; }
-    #s8 .right { padding: 32px 28px 80px; gap: 20px; }
+    #s8 .left .tagline { font-size: 14px; margin-bottom: 28px; }
+    #s8 .left .contact-items { gap: 16px; }
+    .contact-item .ci-val { font-size: 14px; }
+    #s8 .right { padding: 32px 28px 90px; gap: 20px; }
     #s8 .right .logo-wrap img { width: 160px; }
     #s8 .right .cta a { padding: 12px 28px; font-size: 14px; }
   }
